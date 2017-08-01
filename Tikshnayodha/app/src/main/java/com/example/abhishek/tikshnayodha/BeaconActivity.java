@@ -130,6 +130,3 @@ public class BeaconActivity extends AppCompatActivity implements BeaconConsumer,
 }
 
 
-
-
-
