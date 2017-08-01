@@ -3,6 +3,7 @@ package com.example.abhishek.tikshnayodha;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -119,7 +120,11 @@ public class QRActivity extends AppCompatActivity implements View.OnClickListene
             }
             writeDatabase.close();
         }
-        String path=Setting.DATA_PATH+"museum_data/"+str;
+
+        SharedPreferences prefs = getSharedPreferences("MyPref", MODE_PRIVATE);
+        String data_path = prefs.getString("path", null);
+        String path=data_path+"museum_data/"+str;
+
 
         Bitmap bmp = BitmapFactory.decodeFile(path);
         imageView.setImageBitmap(bmp);
