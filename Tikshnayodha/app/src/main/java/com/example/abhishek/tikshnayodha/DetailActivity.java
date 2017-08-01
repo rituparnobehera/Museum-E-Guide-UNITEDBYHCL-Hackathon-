@@ -2,6 +2,7 @@ package com.example.abhishek.tikshnayodha;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
@@ -18,7 +19,6 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -96,7 +96,9 @@ public class DetailActivity extends FragmentActivity {
 
     private void getDataInList() {
 
-        String path=Setting.DATA_PATH+"museum_data/";
+        SharedPreferences prefs = getSharedPreferences("MyPref", MODE_PRIVATE);
+        String data_path = prefs.getString("path", null);
+        String path=data_path+"museum_data/";
 
         Bitmap bmp;
         for (int i = 1; i<a_id.length; i++) {
@@ -177,7 +179,7 @@ public class DetailActivity extends FragmentActivity {
             }
         }
         catch (Exception e) {
-            Toast.makeText(getApplicationContext(),"Some Error "+e.getMessage(), Toast.LENGTH_LONG).show();
+            //Toast.makeText(getApplicationContext(),"Some Error "+e.getMessage(), Toast.LENGTH_LONG).show();
         }
 
     }
