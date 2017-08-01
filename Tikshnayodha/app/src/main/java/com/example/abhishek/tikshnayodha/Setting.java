@@ -2,8 +2,8 @@ package com.example.abhishek.tikshnayodha;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -13,12 +13,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import es.dmoral.toasty.Toasty;
+
 
 public class Setting extends AppCompatActivity implements View.OnClickListener{
 
     EditText data_path;
-    public static String DATA_PATH=Environment.getExternalStorageDirectory().toString();//+"/museum_data/";
     Button set;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,12 +28,17 @@ public class Setting extends AppCompatActivity implements View.OnClickListener{
         data_path=(EditText)findViewById(R.id.video_path);
         set=(Button)findViewById(R.id.set);
         set.setOnClickListener(this);
+
     }
 
     @Override
     public void onClick(View v) {
 
-                DATA_PATH=data_path.getText().toString();
+        SharedPreferences.Editor editor = getSharedPreferences("MyPref", MODE_PRIVATE).edit();
+        editor.putString("path",data_path.getText().toString());
+        editor.commit();
+        Toasty.info(getApplicationContext(), data_path.getText().toString()+"museum_data/" , Toast.LENGTH_LONG, true).show();
+
 
     }
 
