@@ -112,60 +112,68 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         progressDialog.setMessage("Please Wait Login....");
         progressDialog.show();
 
-        final RequestQueue rq;
-        rq = Volley.newRequestQueue(getApplicationContext());
-        String url = MainActivity.IPV4_URL+"/index.php?vemail="+etname.getText()+"&vpassword="+etpass.getText();
-        JsonObjectRequest jor = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    if(response.getString("check").equals("True"))
-                    {
-                        progressDialog.hide();
-                        Toasty.success(getApplicationContext(), "You have Login Successfully", Toast.LENGTH_SHORT, true).show();
+        if(etname.getText().toString().equals("")){
+            progressDialog.hide();
+            etname.setError("Enter your registered EmailId");
+        }
+        else if(etpass.getText().toString().equals("")) {
+            progressDialog.hide();
+            etpass.setError("Enter your Password");
+        }
+        else {
 
-                        if(language.equalsIgnoreCase("English")){
+            final RequestQueue rq;
+            rq = Volley.newRequestQueue(getApplicationContext());
+            String url = MainActivity.IPV4_URL + "/index.php?vemail=" + etname.getText() + "&vpassword=" + etpass.getText();
+            JsonObjectRequest jor = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    try {
+                        if (response.getString("check").equals("True")) {
+                            progressDialog.hide();
+                            Toasty.success(getApplicationContext(), "You have Login Successfully", Toast.LENGTH_SHORT, true).show();
 
-                            ENGLISH_FLAG=true;
-                            POLISH_FLAG=false;
-                            HINDI_FLAG=false;
-                            jsonDecoder(MainActivity.IPV4_URL+"/artical_data_english.php", "eng_artifact_details","English");
+                            if (language.equalsIgnoreCase("English")) {
 
-                        }else if(language.equalsIgnoreCase("Polish")){
+                                ENGLISH_FLAG = true;
+                                POLISH_FLAG = false;
+                                HINDI_FLAG = false;
+                                jsonDecoder(MainActivity.IPV4_URL + "/artical_data_english.php", "eng_artifact_details", "English");
 
-                            ENGLISH_FLAG=false;
-                            POLISH_FLAG=true;
-                            HINDI_FLAG=false;
-                            jsonDecoder(MainActivity.IPV4_URL+"/artical_data_polish.php", "polish_artifact_details","Polish");
+                            } else if (language.equalsIgnoreCase("Polish")) {
 
-                        }else if(language.equalsIgnoreCase("Hindi")){
+                                ENGLISH_FLAG = false;
+                                POLISH_FLAG = true;
+                                HINDI_FLAG = false;
+                                jsonDecoder(MainActivity.IPV4_URL + "/artical_data_polish.php", "polish_artifact_details", "Polish");
 
-                            ENGLISH_FLAG=false;
-                            POLISH_FLAG=false;
-                            HINDI_FLAG=true;
-                            jsonDecoder(MainActivity.IPV4_URL+"/artical_data_hindi.php", "hindi_artifact_details","Hindi");
+                            } else if (language.equalsIgnoreCase("Hindi")) {
 
+                                ENGLISH_FLAG = false;
+                                POLISH_FLAG = false;
+                                HINDI_FLAG = true;
+                                jsonDecoder(MainActivity.IPV4_URL + "/artical_data_hindi.php", "hindi_artifact_details", "Hindi");
+
+                            }
+                            Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
+                            startActivity(intent);
+                        } else {
+                            progressDialog.hide();
+                            Toasty.error(getApplicationContext(), "Email or Password is wrong!!... ", Toast.LENGTH_SHORT, true).show();
                         }
-                        Intent intent=new Intent(getApplicationContext(),MenuActivity.class);
-                        startActivity(intent);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                    else
-                    {
-                        progressDialog.hide();
-                        Toasty.error(getApplicationContext(), "Email or Password is wrong!!... ", Toast.LENGTH_SHORT, true).show();
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
                 }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                progressDialog.hide();
-                Toasty.error(getApplicationContext(), "Need Internet"+error.toString(), Toast.LENGTH_SHORT, true).show();
-            }
-        });
-        rq.add(jor);
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    progressDialog.hide();
+                    Toasty.error(getApplicationContext(), "Need Internet" + error.toString(), Toast.LENGTH_SHORT, true).show();
+                }
+            });
+            rq.add(jor);
+        }
     }
 
     public void registerHere(View view) {
@@ -227,7 +235,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             ENGLISH_FLAG=false;
                             POLISH_FLAG=false;
                             HINDI_FLAG=true;
-                            writeDatabase.insert("hindi_artifcat_table", null, cntval);
+                            writeDatabase.insert("hindi_artifact_table", null, cntval);
                         }
 
                     }
