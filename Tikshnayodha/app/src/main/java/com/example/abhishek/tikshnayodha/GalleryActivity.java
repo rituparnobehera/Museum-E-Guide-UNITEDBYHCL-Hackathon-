@@ -148,4 +148,4 @@ public class GalleryActivity extends FragmentActivity {
 }
 
 
-//redmi 3s path /storage/4389-0DFD/museum_data/
+//redmi 3s path /storage/4389-0DFD/museum_data/dght
