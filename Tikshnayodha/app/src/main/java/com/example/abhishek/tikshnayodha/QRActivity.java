@@ -36,12 +36,7 @@ public class QRActivity extends AppCompatActivity implements View.OnClickListene
     int MediaFlag=0;
     String[] columns = {"artifact_id", "gallery_id", "artifact_name", "artifact_description","media_id"};
 
-    String[] english_audio = {"eng_barbarian_swords.mp3", "eng_indian_coin_in_british_rule.mp3", "eng_triabal_ornaments.mp3", "eng_tribal_weapon.mp3"};
-    String[] hindi_audio = {"hindi_barbarian_swords.mp3", "hindi_indian_coin_in_british_rule.mp3", "hindi_tribal_ornaments.mp3", "hindi_tribal_weapon.mp3"};
-    String[] japanese_audio = {"jpn_barbarian_swords.m4a", "jpn_indian_coin_in_british_rule.m4a", "jpn_triabal_ornaments.wma", "jpn_tribal_weapon.m4a"};
-
-    String[] threeD_Model={"com.Tikshnayodha.hackSword","com.Tikshnayodha.hackCoin","com.Tikshnayodha.hackBangle","com.Tikshnayodha.hackAxe"};
-
+    
     String str="";
     String m_id;
     int artical_id;
